@@ -91,6 +91,7 @@ import androidx.compose.ui.unit.dp
 import com.android.compose.modifiers.size
 import com.android.compose.modifiers.thenIf
 import com.android.compose.ui.graphics.painter.rememberDrawablePainter
+import com.android.systemui.qs.composefragment.LocalQsScrolling
 import com.android.systemui.common.shared.model.Icon
 import com.android.systemui.common.ui.compose.Icon
 import com.android.systemui.common.ui.compose.load
@@ -320,7 +321,8 @@ private fun TileLabel(
 ) {
     var textSize by remember { mutableIntStateOf(0) }
 
-    val iterations = if (isVisible()) TILE_MARQUEE_ITERATIONS else 0
+    val isScrolling = LocalQsScrolling.current
+    val iterations = if (isVisible() && !isScrolling) TILE_MARQUEE_ITERATIONS else 0
 
     BasicText(
         text = text,
