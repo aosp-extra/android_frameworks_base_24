@@ -71,6 +71,7 @@ import static com.android.wm.shell.transition.TransitionAnimationHelper.getTrans
 import static com.android.wm.shell.transition.TransitionAnimationHelper.isCoveredByOpaqueFullscreenChange;
 import static com.android.wm.shell.transition.TransitionAnimationHelper.loadAttributeAnimation;
 
+import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.annotation.ColorInt;
 import android.annotation.NonNull;
@@ -687,8 +688,9 @@ public class DefaultTransitionHandler implements Transitions.TransitionHandler {
 
             long longestDurationMs = 0L;
             for (int i = 0; i < animations.size(); ++i) {
-                final Animator a = animations.get(i);
-                if (a instanceof ValueAnimator va) {
+                final WindowAnimation wa = animations.get(i);
+                final ValueAnimator va = wa.getAnimator();
+                if (va != null) {
                     final long d = va.getDuration();
                     if (d > longestDurationMs) longestDurationMs = d;
                 }
